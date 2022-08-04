@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/budget.css"/>
+    <title>Title</title>
+</head>
+<body>
+<p>MY MONEY</p>
+<div class="menu-buttons">
+    <a class="menu-button" href="budget.html"
+       th:href="@{http://localhost:8080/myMoney/budget}">Бюджет</a>
+    <a class="menu-button" href="dailyReport.html"
+       th:href="@{http://localhost:8080/myMoney/dailyReport}">Отчет по дням</a>
+    <a class="menu-button" href="diagram.html"
+       th:href="@{http://localhost:8080/myMoney/diagram}">Общая диаграмма</a>
+    <a class="menu-button" href="history.html"
+       th:href="@{http://localhost:8080/myMoney/history}">История</a>
+    <a class="menu-button" href="piggyBanks.html"
+       th:href="@{http://localhost:8080/myMoney/piggyBanks}">Копилки</a>
+    <a class="menu-button" href="settings.html"
+       th:href="@{http://localhost:8080/myMoney/settings}">Настройки</a>
+
+    <div class="container">
+
+
+
+        <div class="table">
+            <table id="yieldTab">
+                <caption>Копилки</caption>
+                <tbody>
+                <tr th:each="item : ${items}">
+                    <td contenteditable='true' th:text="${item.name}"></td>
+                    <td contenteditable='true' th:text="${item.coin}"></td>
+                    <td>
+                        <form th:action="@{/piggyBanks/delex{id}(id = ${item.id})}" th:method="delete">
+                            <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Всего</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+            <form method="post" th:action="@{/piggyBanks/add}" th:object="${item}">
+                <div class="input-group">
+                    <input type="text" required th:field="*{name}" class="form-control" placeholder="Название новой копилки"
+                           aria-label="Название нового дохода" aria-describedby="basic-addon2">
+                    <input type="text" required th:field="*{coin}" class="form-control" placeholder="Сколько бы вы хотели накопить?"
+                           aria-label="Сумма" aria-describedby="basic-addon2">
+                    <input type="text" required th:field="*{percent}" class="form-control" placeholder="Какой процент доходов вы готовы откладывать?"
+                           aria-label="Сумма" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">Добавить копилку
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+</div>
+</div>
+</body>
+</html>

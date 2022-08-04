@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/budget.css"/>
+    <title>Daily Report</title>
+</head>
+<body>
+<p>MY MONEY</p>
+<div class="menu-buttons">
+    <a class="menu-button" href="budget.html"
+       th:href="@{http://localhost:8080/myMoney/budget}">Бюджет</a>
+    <a class="menu-button" href="dailyReport.html"
+       th:href="@{http://localhost:8080/myMoney/dailyReport}">Отчет по дням</a>
+    <a class="menu-button" href="diagram.html"
+       th:href="@{http://localhost:8080/myMoney/diagram}">Общая диаграмма</a>
+    <a class="menu-button" href="history.html"
+       th:href="@{http://localhost:8080/myMoney/history}">История</a>
+    <a class="menu-button" href="piggyBanks.html"
+       th:href="@{http://localhost:8080/myMoney/piggyBanks}">Копилки</a>
+    <a class="menu-button" href="settings.html"
+       th:href="@{http://localhost:8080/myMoney/settings}">Настройки</a>
+</div>
+
+<div class="container">
+    <form th:action="@{/dailyReport/prev}" method="get">
+    <button type="submit"  class="triangle-left"><</button>
+    </form>
+
+    <div class="date-and-money">
+        <span class="date" id="daily-date" th:text="${selectDate}"></span>
+        <span class="money" th:text="${dailySum}"></span>
+    </div>
+
+    <form th:action="@{/dailyReport/next}" method="get">
+    <button class="triangle-right">></button>
+    </form>
+</div>
+
+<table class="table" id="dailyReportTab">
+    <tbody>
+    <tr th:each="item : ${initems}">
+        <td style="color: #cc0000" class="income"  th:text="${item.name}"></td>
+        <td style="color: #cc0000" class="income"  th:text="${item.coin}">-</td>
+    </tr>
+    <script>
+        var tdItems = document.getElementsByTagName("td");
+        for (var i = 0; i < tdItems.length; i++) {
+            tdItems[i].addEventListener('click', tdClick, false);
+        }
+    </script>
+    <tr th:each="item : ${exitems}">
+        <td style="color: seagreen" class="expense" th:text="${item.name}"></td>
+        <td style="color: seagreen" class="expense"  th:text="${item.coin}">+</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

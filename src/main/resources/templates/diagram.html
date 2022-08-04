@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/budget.css"/>
+    <title>Title</title>
+</head>
+<body>
+<p>MY MONEY</p>
+<div class="menu-buttons">
+    <a class="menu-button" href="budget.html"
+       th:href="@{http://localhost:8080/myMoney/budget}">Бюджет</a>
+    <a class="menu-button" href="dailyReport.html"
+       th:href="@{http://localhost:8080/myMoney/dailyReport}">Отчет по дням</a>
+    <a class="menu-button" href="diagram.html"
+       th:href="@{http://localhost:8080/myMoney/diagram}">Общая диаграмма</a>
+    <a class="menu-button" href="history.html"
+       th:href="@{http://localhost:8080/myMoney/history}">История</a>
+    <a class="menu-button" href="piggyBanks.html"
+       th:href="@{http://localhost:8080/myMoney/piggyBanks}">Копилки</a>
+    <a class="menu-button" href="settings.html"
+       th:href="@{http://localhost:8080/myMoney/settings}">Настройки</a>
+</div>
+</body>
+</html>

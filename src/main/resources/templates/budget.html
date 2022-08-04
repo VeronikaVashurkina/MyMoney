@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/budget.css"/>
+    <title>Budget</title>
+</head>
+<body>
+<p>MY MONEY</p>
+<div class="menu-buttons">
+    <a class="menu-button" href="budget.html"
+       th:href="@{http://localhost:8080/myMoney/budget}">Бюджет</a>
+    <a class="menu-button" href="dailyReport.html"
+       th:href="@{http://localhost:8080/myMoney/dailyReport}">Отчет по дням</a>
+    <a class="menu-button" href="diagram.html"
+       th:href="@{http://localhost:8080/myMoney/diagram}">Общая диаграмма</a>
+    <a class="menu-button" href="history.html"
+       th:href="@{http://localhost:8080/myMoney/history}">История</a>
+    <a class="menu-button" href="piggyBanks.html"
+       th:href="@{http://localhost:8080/myMoney/piggyBanks}">Копилки</a>
+    <a class="menu-button" href="settings.html"
+       th:href="@{http://localhost:8080/myMoney/settings}">Настройки</a>
+    <!--<a href="details.html"
+       th:href="@{http://localhost:8080/MyMoney/order/details(orderId=${o.id})}">view</a>
+       -->
+</div>
+
+<div class="container">
+
+
+    <div class="date">
+        <form th:action="@{/budget}" method="get">
+            <input type="month" id="date" name="date" th:value="${selectDate}" required>
+            <button type="submit">Ok</button>
+        </form>
+    </div>
+
+
+    <div class="table">
+        <table id="yieldTab">
+            <caption>Доходы</caption>
+            <tbody>
+            <tr th:each="item : ${exitems}">
+                <td contenteditable='true' th:text="${item.name}"></td>
+                <td contenteditable='true' th:text="${item.coin}"></td>
+                <td>
+                    <form th:action="@{/budget/delex{id}(id = ${item.id})}" th:method="delete">
+                        <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Всего</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script>
+            var table = document.getElementById("yieldTab");
+            let lastRow = table.rows[table.rows.length - 1];
+            for (var i = 0; i < table.rows.length - 1; i++) {
+                let row = table.rows[i];
+
+                var j = 1;
+                let cel = row.cells[j];
+
+                lastRow.cells[j].innerText =
+                    (Number(lastRow.cells[j].innerText) || 0) +
+                    (Number(cel.innerText) || 0);
+
+            }
+        </script>
+
+
+        <form method="post" th:action="@{/budget/addex}" th:object="${exitem}">
+            <div class="input-group">
+                <input type="text" required th:field="*{name}" class="form-control" placeholder="Название нового дохода"
+                       aria-label="Название нового дохода" aria-describedby="basic-addon2">
+                <input type="text" required th:field="*{coin}" class="form-control" placeholder="Сумма"
+                       aria-label="Сумма" aria-describedby="basic-addon2">
+                <input type="date" required id="datePicker2" th:field="*{date}" class="form-control">
+                <script>document.getElementById('datePicker2').valueAsDate = new Date();</script>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Добавить доход
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+    <div class="table">
+        <table id="costsTab">
+            <caption>Расходы</caption>
+            <tbody>
+            <tr th:each="item : ${initems}">
+                <td contenteditable='true' th:text="${item.name}"></td>
+                <td contenteditable='true' th:text="${item.coin}"></td>
+                <td>
+                    <form th:action="@{/budget/delin{id}(id = ${item.id})}" th:method="delete">
+                        <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Всего</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script>
+            table = document.getElementById("costsTab");
+            lastRow = table.rows[table.rows.length - 1];
+            for (var i = 0; i < table.rows.length - 1; i++) {
+                let row = table.rows[i];
+
+                var j = 1;
+                let cel = row.cells[j];
+
+                lastRow.cells[j].innerText =
+                    (Number(lastRow.cells[j].innerText) || 0) +
+                    (Number(cel.innerText) || 0);
+
+            }
+        </script>
+
+        <form method="post" th:action="@{/budget/addin}" th:object="${initem}">
+            <div class="input-group">
+                <input type="text" required th:field="*{name}" class="form-control" placeholder="Название нового дохода"
+                       aria-label="Название нового дохода" aria-describedby="basic-addon2">
+                <input type="text" required th:field="*{coin}" class="form-control" placeholder="Сумма"
+                       aria-label="Сумма" aria-describedby="basic-addon2">
+                <input type="date" required id="datePicker" th:field="*{date}" class="form-control">
+                <script>document.getElementById('datePicker').valueAsDate = new Date();</script>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Добавить расход
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+</body>
+</html>
